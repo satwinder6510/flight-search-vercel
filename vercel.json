@@ -1,23 +1,26 @@
 {
   "version": 2,
   "builds": [
-    // 1) Serverless function for /api
-    { "src": "api/index.js", "use": "@vercel/node" },
-    // 2) Static build of your Vite app into dist/
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
     {
       "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
+      "use": "@vercel/static-build"
     }
   ],
   "routes": [
-    // 1) All /api/* → your Express app
-    { "src": "/api/(.*)", "dest": "api/index.js" },
-
-    // 2) Try to serve static files from the build (dist/)
-    { "handle": "filesystem" },
-
-    // 3) All other routes → dist/index.html (SPA fallback)
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
